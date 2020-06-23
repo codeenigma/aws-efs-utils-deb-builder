@@ -3,6 +3,7 @@ addons:
     packages:
     - git
     - binutils
+language: generic
 jobs:
   include:
   - stage: Package
