@@ -1,0 +1,13 @@
+addons:
+  apt:
+    packages:
+    - git
+    - binutils
+jobs:
+  include:
+  - stage: Package
+    os: linux
+    script: 
+      - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
+      - /bin/sh efs-utils/build-deb.sh
+      - ls efs-utils/build/
