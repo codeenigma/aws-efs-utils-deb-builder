@@ -9,5 +9,18 @@ jobs:
     os: linux
     script: 
       - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
-      - /bin/sh efs-utils/build-deb.sh
-      - ls efs-utils/build/
+      - cd efs-utils
+      - /bin/sh build-deb.sh
+  - stage: Release
+    os: linux
+    deploy:
+      edge: true
+      provider: releases
+      token:
+        secure: Dq+aYoeFO+nUUwHzXPyMP3p4vOynLHMiZ91RoE3C/+pq4c1NeJIi2/7KUYdNaAgUvU8RVRlCuwNtd4mju/WSvMbYY59hWpv8Xj1mp6gVuvPFWMSDeT4aJKaXiU+ONSi7Zt5NnxeIQ+QKMUHIr1E8EKpTSKljUSiey8veYyuyzWgXqVmx7akmknSdLSk3VNqtbb38S4PiKt6Oq2lM12mouhPIZE6VVIALzVe2A8Jr0fR8OAyQog0g6inqJ1xg5KcMj2NMTI/1m7x8Av2KS9hbvEwen0Py4XBFmAxGE1oJu6k3UV81PEPqh3jvMfDp5klwV32svJEZzgQDHZYM+Nm48alomLgnHn/ffeRU8J5Z1yzTItW93HtuK1SLte7s9a/poQrljKSue2IkLdlCcHo3kbragGOhW/16ix2mPniBlwq8BzB6IjasErvJ241KlRXkR6ZNL4LJeToOmJQwiK2yaBrWRGS0xH2hj0OJdwCLHAKGaN5H3lWu07QNAHCIZcwFicSwVo34Wh25W0m3uJrQbxl77XFzBY2TfMpILcTVktk4hZbq5m52gLU2VB65Ew70rQszMxzLWa5dKSoSdncodMP17pWuEK5YuvZt0ZUONqPGlh1ETNtaPqGy7wXv/ddgQRy5mZuyjKB3PADcbY2jURuaoBgJUXz7HmEFVZKxsfU=
+      file: build/*.deb
+      file_glob: true
+      overwrite: true
+      cleanup: false
+      on:
+        tags: true
