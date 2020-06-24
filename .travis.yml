@@ -12,7 +12,7 @@ script:
   - cd efs-utils
   - "/bin/sh build-deb.sh"
   - export TRAVIS_TAG=$(git tag --sort=-committerdate | head -1)
-  - if [ "$CURRENT_TAG" = "$TRAVIS_TAG" ]; then git tag "$TRAVIS_TAG" -m "$TRAVIS_TAG"; fi
+  - if [ ! "$CURRENT_TAG" = "$TRAVIS_TAG" ]; then git tag "$TRAVIS_TAG" -m "$TRAVIS_TAG"; fi
 deploy:
   edge: true
   provider: releases
@@ -24,3 +24,4 @@ deploy:
   cleanup: false
   on:
     branch: master
+    tag: true
