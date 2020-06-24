@@ -23,4 +23,4 @@ deploy:
   overwrite: true
   cleanup: false
   on:
-    tags: true
+    branch: master
