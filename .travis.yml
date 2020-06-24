@@ -5,9 +5,12 @@ addons:
     - binutils
 language: generic
 script:
-  - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
+  - export CURRENT_TAG(git tag --sort=-committerdate | head -1)
+  - git clone https://github.com/aws/efs-utils
   - cd efs-utils
   - "/bin/sh build-deb.sh"
+  - export TRAVIS_TAG=$(git tag --sort=-committerdate | head -1)
+  - [ "$CURRENT_TAG" = "$TRAVIS_TAG" ] && git tag "$TRAVIS_TAG"
 deploy:
   edge: true
   provider: releases
