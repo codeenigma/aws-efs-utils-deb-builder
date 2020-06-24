@@ -4,27 +4,18 @@ addons:
     - git
     - binutils
 language: generic
-jobs:
-  include:
-  - stage: Package
-    os: linux
-    script:
-    - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
-    - cd efs-utils
-    - "/bin/sh build-deb.sh"
-  - stage: Release
-    os: linux
-    deploy:
-      edge: true
-      provider: releases
-      token:
-        secure: nIk/Z1o5TTwJ3splcaQgdKYuKAt9t1Ioi2na41P/g1OtfHud1xwkN3vdiWiKFmFRrau4710z9N5YpZdc/c5Br1YLyHffYeNZS3TMnuR0Rh9yUeiFtbtx681ivLUEP+QydGHJF3mos+tlA5Zo0Op4MC/inIZQVznS9ovn/wwc1+s5rX1HEN6J5vDZP9X4OVBxZ+tqlbFvD75iqIJ88Ku/N6u+ti0X4OJXaL/CrG9JEKllKvVwvzyFxnx2D3PP6KtQxWGT1W+zD2bWpopQjuQ/D8cIT2az7En4us6kpPSm2et4SSJCv5dUgKz0aW5Slid6ctZDWYocU32+NphNuEaJWvIs4uabqNUd4W7M0IIODpYAPL7ho68ZJTBKlYSzm++zS63GfJCI29wajHJkFERbvHXAy1grjDUVvNiOjyHJlYGHP9dZBH+CzgiIGmOhsRHXTzEZ7wfCo9fFkQAWigWksa2/dWIP6R5QIf0QvOFmSmGhYo1CopMcBoPTIFrPiEycsKBzaau+sq/rRg3i0WgQes2B1+Dqioz3qTAOwhZ7tU9lgl5vQxGvBynJ2AjQVrC0gYwA261IfhTXR0mQo97VBj42fnfT3viwrWo31VQHoxMVWKZBnztZDARbjw9EwEqL9r2uyJHPcAjF+tfYhaAld3TQ75ho9LWklSj8nNBJZ5Y=
-      file: efs-utils/build/*.deb
-      file_glob: true
-      overwrite: true
-      cleanup: false
-      on:
-        tags: true
-env:
-  global:
+script:
+  - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
+  - cd efs-utils
+  - "/bin/sh build-deb.sh"
+deploy:
+  edge: true
+  provider: releases
+  token:
     secure: nIk/Z1o5TTwJ3splcaQgdKYuKAt9t1Ioi2na41P/g1OtfHud1xwkN3vdiWiKFmFRrau4710z9N5YpZdc/c5Br1YLyHffYeNZS3TMnuR0Rh9yUeiFtbtx681ivLUEP+QydGHJF3mos+tlA5Zo0Op4MC/inIZQVznS9ovn/wwc1+s5rX1HEN6J5vDZP9X4OVBxZ+tqlbFvD75iqIJ88Ku/N6u+ti0X4OJXaL/CrG9JEKllKvVwvzyFxnx2D3PP6KtQxWGT1W+zD2bWpopQjuQ/D8cIT2az7En4us6kpPSm2et4SSJCv5dUgKz0aW5Slid6ctZDWYocU32+NphNuEaJWvIs4uabqNUd4W7M0IIODpYAPL7ho68ZJTBKlYSzm++zS63GfJCI29wajHJkFERbvHXAy1grjDUVvNiOjyHJlYGHP9dZBH+CzgiIGmOhsRHXTzEZ7wfCo9fFkQAWigWksa2/dWIP6R5QIf0QvOFmSmGhYo1CopMcBoPTIFrPiEycsKBzaau+sq/rRg3i0WgQes2B1+Dqioz3qTAOwhZ7tU9lgl5vQxGvBynJ2AjQVrC0gYwA261IfhTXR0mQo97VBj42fnfT3viwrWo31VQHoxMVWKZBnztZDARbjw9EwEqL9r2uyJHPcAjF+tfYhaAld3TQ75ho9LWklSj8nNBJZ5Y=
+  file: build/*.deb
+  file_glob: true
+  overwrite: true
+  cleanup: false
+  on:
+    tags: true
