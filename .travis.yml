@@ -10,11 +10,11 @@ script:
   - export CURRENT_TAG=$(git tag --sort=-committerdate | head -1)
   - git clone https://github.com/aws/efs-utils
   - cd efs-utils
-  - export LATEST_TAG=$(git tag --sort=-committerdate | head -1)
-  - git checkout $LATEST_TAG
+  - export TRAVIS_TAG=$(git tag --sort=-committerdate | head -1)
+  - git checkout "$TRAVIS_TAG"
   - "/bin/sh build-deb.sh"
   - cd ..
-  - if [ ! "$CURRENT_TAG" = "$LATEST_TAG" ]; then export TRAVIS_TAG="$LATEST_TAG"; git tag "$LATEST_TAG" -m "$LATEST_TAG"; fi
+  - if [ ! "$CURRENT_TAG" = "$TRAVIS_TAG" ]; then git tag "$TRAVIS_TAG" -m "$TRAVIS_TAG"; fi
 deploy:
   edge: true
   provider: releases
@@ -25,4 +25,5 @@ deploy:
   overwrite: true
   cleanup: false
   on:
+    branch: master
     tag: true
