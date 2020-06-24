@@ -8,20 +8,23 @@ jobs:
   include:
   - stage: Package
     os: linux
-    script: 
-      - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
-      - cd efs-utils
-      - /bin/sh build-deb.sh
+    script:
+    - git clone --depth 1 --branch v1.26.2 https://github.com/aws/efs-utils
+    - cd efs-utils
+    - "/bin/sh build-deb.sh"
   - stage: Release
     os: linux
     deploy:
       edge: true
       provider: releases
       token:
-        secure: Dq+aYoeFO+nUUwHzXPyMP3p4vOynLHMiZ91RoE3C/+pq4c1NeJIi2/7KUYdNaAgUvU8RVRlCuwNtd4mju/WSvMbYY59hWpv8Xj1mp6gVuvPFWMSDeT4aJKaXiU+ONSi7Zt5NnxeIQ+QKMUHIr1E8EKpTSKljUSiey8veYyuyzWgXqVmx7akmknSdLSk3VNqtbb38S4PiKt6Oq2lM12mouhPIZE6VVIALzVe2A8Jr0fR8OAyQog0g6inqJ1xg5KcMj2NMTI/1m7x8Av2KS9hbvEwen0Py4XBFmAxGE1oJu6k3UV81PEPqh3jvMfDp5klwV32svJEZzgQDHZYM+Nm48alomLgnHn/ffeRU8J5Z1yzTItW93HtuK1SLte7s9a/poQrljKSue2IkLdlCcHo3kbragGOhW/16ix2mPniBlwq8BzB6IjasErvJ241KlRXkR6ZNL4LJeToOmJQwiK2yaBrWRGS0xH2hj0OJdwCLHAKGaN5H3lWu07QNAHCIZcwFicSwVo34Wh25W0m3uJrQbxl77XFzBY2TfMpILcTVktk4hZbq5m52gLU2VB65Ew70rQszMxzLWa5dKSoSdncodMP17pWuEK5YuvZt0ZUONqPGlh1ETNtaPqGy7wXv/ddgQRy5mZuyjKB3PADcbY2jURuaoBgJUXz7HmEFVZKxsfU=
+        secure: nIk/Z1o5TTwJ3splcaQgdKYuKAt9t1Ioi2na41P/g1OtfHud1xwkN3vdiWiKFmFRrau4710z9N5YpZdc/c5Br1YLyHffYeNZS3TMnuR0Rh9yUeiFtbtx681ivLUEP+QydGHJF3mos+tlA5Zo0Op4MC/inIZQVznS9ovn/wwc1+s5rX1HEN6J5vDZP9X4OVBxZ+tqlbFvD75iqIJ88Ku/N6u+ti0X4OJXaL/CrG9JEKllKvVwvzyFxnx2D3PP6KtQxWGT1W+zD2bWpopQjuQ/D8cIT2az7En4us6kpPSm2et4SSJCv5dUgKz0aW5Slid6ctZDWYocU32+NphNuEaJWvIs4uabqNUd4W7M0IIODpYAPL7ho68ZJTBKlYSzm++zS63GfJCI29wajHJkFERbvHXAy1grjDUVvNiOjyHJlYGHP9dZBH+CzgiIGmOhsRHXTzEZ7wfCo9fFkQAWigWksa2/dWIP6R5QIf0QvOFmSmGhYo1CopMcBoPTIFrPiEycsKBzaau+sq/rRg3i0WgQes2B1+Dqioz3qTAOwhZ7tU9lgl5vQxGvBynJ2AjQVrC0gYwA261IfhTXR0mQo97VBj42fnfT3viwrWo31VQHoxMVWKZBnztZDARbjw9EwEqL9r2uyJHPcAjF+tfYhaAld3TQ75ho9LWklSj8nNBJZ5Y=
       file: build/*.deb
       file_glob: true
       overwrite: true
       cleanup: false
       on:
         tags: true
+env:
+  global:
+    secure: nIk/Z1o5TTwJ3splcaQgdKYuKAt9t1Ioi2na41P/g1OtfHud1xwkN3vdiWiKFmFRrau4710z9N5YpZdc/c5Br1YLyHffYeNZS3TMnuR0Rh9yUeiFtbtx681ivLUEP+QydGHJF3mos+tlA5Zo0Op4MC/inIZQVznS9ovn/wwc1+s5rX1HEN6J5vDZP9X4OVBxZ+tqlbFvD75iqIJ88Ku/N6u+ti0X4OJXaL/CrG9JEKllKvVwvzyFxnx2D3PP6KtQxWGT1W+zD2bWpopQjuQ/D8cIT2az7En4us6kpPSm2et4SSJCv5dUgKz0aW5Slid6ctZDWYocU32+NphNuEaJWvIs4uabqNUd4W7M0IIODpYAPL7ho68ZJTBKlYSzm++zS63GfJCI29wajHJkFERbvHXAy1grjDUVvNiOjyHJlYGHP9dZBH+CzgiIGmOhsRHXTzEZ7wfCo9fFkQAWigWksa2/dWIP6R5QIf0QvOFmSmGhYo1CopMcBoPTIFrPiEycsKBzaau+sq/rRg3i0WgQes2B1+Dqioz3qTAOwhZ7tU9lgl5vQxGvBynJ2AjQVrC0gYwA261IfhTXR0mQo97VBj42fnfT3viwrWo31VQHoxMVWKZBnztZDARbjw9EwEqL9r2uyJHPcAjF+tfYhaAld3TQ75ho9LWklSj8nNBJZ5Y=
