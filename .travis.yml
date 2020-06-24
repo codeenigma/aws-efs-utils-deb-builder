@@ -7,7 +7,7 @@ addons:
     - binutils
 language: generic
 script:
-  - export CURRENT_TAG(git tag --sort=-committerdate | head -1)
+  - export CURRENT_TAG=$(git tag --sort=-committerdate | head -1)
   - git clone https://github.com/aws/efs-utils
   - cd efs-utils
   - "/bin/sh build-deb.sh"
