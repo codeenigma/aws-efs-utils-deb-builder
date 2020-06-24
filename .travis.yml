@@ -26,4 +26,4 @@ deploy:
   cleanup: false
   on:
     branch: master
-    tags: true
+    tags: true # This probably needs to be removed. See if next job fails.
