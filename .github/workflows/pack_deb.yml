@@ -32,6 +32,7 @@ jobs:
           cd ..
           if [ ! "$CURRENT_TAG" = "$THIS_TAG" ]; then git tag "$THIS_TAG" -m "$THIS_TAG"; fi
           git checkout "$THIS_TAG"
+          git switch -c "$THIS_TAG"
 
       - name: Publish package
         uses: svenstaro/upload-release-action@v2
