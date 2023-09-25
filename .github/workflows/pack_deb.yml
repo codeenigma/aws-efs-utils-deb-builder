@@ -17,7 +17,7 @@ jobs:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Build .deb file
         run: |
           sudo apt-get install binutils -y
@@ -31,7 +31,7 @@ jobs:
           /bin/sh build-deb.sh
           cd ..
           if [ ! "$CURRENT_TAG" = "$THIS_TAG" ]; then git tag "$THIS_TAG" -m "$THIS_TAG"; fi
-          ls -la efs-utils/build/
+          git checkout "$THIS_TAG"
 
       - name: Publish package
         uses: svenstaro/upload-release-action@v2
