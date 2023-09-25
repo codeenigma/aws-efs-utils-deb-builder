@@ -11,7 +11,7 @@ jobs:
     # Name the Job
     name: Build the AWS EFS utils deb
     # Set the type of machine to run on
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
@@ -32,11 +32,11 @@ jobs:
           cd ..
           if [ ! "$CURRENT_TAG" = "$THIS_TAG" ]; then git tag "$THIS_TAG" -m "$THIS_TAG"; fi
 
-      - name: Commit changes
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'sysadm@codeenigma.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git checkout "${GITHUB_REF:11}"
-          git commit -am "New release"
-          git push
+      - name: Publish package
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: efs-utils/build/*.deb
+          asset_name: amazon-efs-utils-${{ $tag }}-1_all.deb
+          tag: ${{ github.ref }}
+          overwrite: true
