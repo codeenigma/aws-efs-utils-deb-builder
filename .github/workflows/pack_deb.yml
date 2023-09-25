@@ -31,12 +31,13 @@ jobs:
           /bin/sh build-deb.sh
           cd ..
           if [ ! "$CURRENT_TAG" = "$THIS_TAG" ]; then git tag "$THIS_TAG" -m "$THIS_TAG"; fi
-          ls -la
+          ls -la efs-utils/build/
 
       - name: Publish package
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ~/efs-utils/build/*.deb
+          file: efs-utils/build/*.deb
+          file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
