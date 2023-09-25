@@ -20,6 +20,9 @@ jobs:
         
       - name: Build .deb file
         run: |
+          sudo apt-get install binutils -y
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'sysadm@codeenigma.com'
           export CURRENT_TAG=$(git tag --sort=-committerdate | head -1)
           git clone https://github.com/aws/efs-utils
           cd efs-utils
