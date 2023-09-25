@@ -31,11 +31,12 @@ jobs:
           /bin/sh build-deb.sh
           cd ..
           if [ ! "$CURRENT_TAG" = "$THIS_TAG" ]; then git tag "$THIS_TAG" -m "$THIS_TAG"; fi
+          ls -la
 
       - name: Publish package
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/*.deb
+          file: ~/efs-utils/build/*.deb
           tag: ${{ github.ref }}
           overwrite: true
