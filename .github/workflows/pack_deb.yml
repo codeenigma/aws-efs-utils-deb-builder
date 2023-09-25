@@ -1,0 +1,39 @@
+name: Build AWS EFS Utils .deb package.
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  workflow_dispatch
+
+jobs:
+  # Set the job key. The key is displayed as the job name
+  # when a job name is not provided
+  build-deb:
+    # Name the Job
+    name: Build the AWS EFS utils deb
+    # Set the type of machine to run on
+    runs-on: ubuntu-22.04
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Build .deb file
+        run: |
+          export CURRENT_TAG=$(git tag --sort=-committerdate | head -1)
+          git clone https://github.com/aws/efs-utils
+          cd efs-utils
+          export THIS_TAG=$(git tag --sort=-committerdate | head -1)
+          git checkout "$THIS_TAG"
+          /bin/sh build-deb.sh
+          cd ..
+          if [ ! "$CURRENT_TAG" = "$THIS_TAG" ]; then git tag "$THIS_TAG" -m "$THIS_TAG"; fi
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'sysadm@codeenigma.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "New release"
+          git push
